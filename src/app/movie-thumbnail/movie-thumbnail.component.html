@@ -1,0 +1,23 @@
+<div class="card mx-auto" style="width: 200px;">
+  <img class="card-img-top" style="height: 200px;" src="{{ movie.poster }}" alt="{{ movie.name + ' ' + movie.caption }}">
+  <div class="card-body">
+    <h5 class="card-title" style="font-size: 1rem;">
+      {{ movie.name }}
+      <p>
+        <small class="text-muted">{{ movie.caption || movie.getMovieGenres(movieIndex)}}</small>
+      </p>
+    </h5>
+    <app-rating [rating]="movie.rating.rating"></app-rating>
+  </div>
+  <div class="card-footer">
+    <i class="fa fa-eye float-right"
+       style="cursor: pointer;"
+       [ngClass]="{'text-success': movieService.isMovieInWatchList(movieIndex)}"
+       (click)="onToggleFromWatchList(movieIndex)"
+    ></i>
+    <i class="fa fa-trash float-right text-danger mx-3"
+       style="cursor: pointer;"
+       (click)="onDeleteMovie(movieIndex)"
+    ></i>
+  </div>
+</div>

@@ -1,0 +1,8 @@
+<div class="row">
+  <div class="col">
+    <h3 class="py-5">Watch List</h3>
+  </div>
+</div>
+<div class="card-deck">
+  <app-movie-thumbnail *ngFor="let movie of movies; let i = index" [movie]="movie" [movieIndex]="i"></app-movie-thumbnail>
+</div>
