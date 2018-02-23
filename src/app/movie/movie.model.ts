@@ -11,7 +11,7 @@ export class Movie {
     public synopsis: string
   ) {}
 
-  getMovieGenres(index: number) {
+  getMovieGenres() {
     let genres = [];
     for(let genre of this.genre) {
       genres.push(genre.name);

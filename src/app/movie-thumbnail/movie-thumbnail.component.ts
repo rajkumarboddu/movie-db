@@ -17,13 +17,13 @@ export class MovieThumbnailComponent implements OnInit {
   ngOnInit() {
   }
 
-  onToggleFromWatchList(index){
+  onToggleFromWatchList(index: number){
     this.movieService.toggleFromWatchList(index);
     this.movieService.watchListChanged.next(this.movieService.getWatchList());
 
   }
 
-  onDeleteMovie(index) {
+  onDeleteMovie(index: number) {
     this.movieService.deleteMovie(index);
     this.movieService.watchListChanged.next(this.movieService.getWatchList());
     this.movieService.moviesChanged.next(this.movieService.getMovies());

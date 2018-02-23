@@ -10,8 +10,11 @@ import { WatchListComponent } from './watch-list/watch-list.component';
 import { GenreComponent } from './movie/genre/genre.component';
 import { MovieService } from './movie/movie.service';
 import { MovieThumbnailComponent } from './movie-thumbnail/movie-thumbnail.component';
-import {AppRoutingModule} from './app-routing.module';
+import { AppRoutingModule } from './app-routing.module';
 import { HomeComponent } from './home/home.component';
+import { MovieEditComponent } from './movie/movie-edit/movie-edit.component';
+import { GenreService } from './movie/genre/genre.service';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -23,13 +26,16 @@ import { HomeComponent } from './home/home.component';
     WatchListComponent,
     GenreComponent,
     MovieThumbnailComponent,
-    HomeComponent
+    HomeComponent,
+    MovieEditComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
-  providers: [MovieService],
+  providers: [MovieService, GenreService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

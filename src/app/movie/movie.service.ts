@@ -88,17 +88,17 @@ export class MovieService {
     return false;
   }
 
-  getMovieGenres(index: number) {
-    let genres = [];
-    for(let genre of this.movies[index].genre) {
-      genres.push(genre.name);
-    }
-    return genres.join(", ");
-  }
-
   deleteMovie(movieIndex: number) {
     this.toggleFromWatchList(movieIndex);
     this.movies.splice(movieIndex,1);
+  }
+
+  getMovie(movieIndex: number): Movie {
+    return this.movies.slice()[movieIndex];
+  }
+
+  addMovie(newMovie: Movie) {
+    this.movies.push(newMovie);
   }
 
 }

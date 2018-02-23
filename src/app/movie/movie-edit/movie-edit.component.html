@@ -1,0 +1,106 @@
+<div class="row py-5">
+  <div class="col">
+    <h1>New Movie</h1>
+  </div>
+</div>
+<div class="row">
+  <div class="col">
+    <form [formGroup]="movieForm" (ngSubmit)="onSubmit()" ngClass="{'was-validated': !movieForm.valid}">
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="name">Name</label>
+          <input
+            type="text"
+            class="form-control"
+            id="name"
+            name="name"
+            formControlName="name"
+            placeholder="Enter Movie Name"
+            required>
+          <div class="invalid-feedback"
+               [ngStyle]="{ 'display': (movieForm.get('name').touched && !movieForm.get('name').valid) ? 'block' : 'none' }"
+          >Please enter movie name</div>
+        </div>
+        <div class="form-group col-md-6">
+          <label for="caption">Caption</label>
+          <input
+            type="text"
+            class="form-control"
+            id="caption"
+            name="caption"
+            formControlName="caption"
+            placeholder="Enter Movie Caption">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-6" formArrayName="genre">
+          <label for="name">Genres</label>
+          <div class="invalid-feedback">Please select atleast one Genre</div>
+          <div class="custom-control custom-checkbox my-1 mr-sm-2" *ngFor="let genre of movieForm.get('genre').controls; let i = index">
+            <input
+              type="checkbox"
+              class="custom-control-input"
+              id="genre{{ i }}"
+              name="genre"
+              [formControlName]="i">
+            <label class="custom-control-label" for="genre{{ i }}">{{ genres[i].name }}</label>
+          </div>
+        </div>
+        <div class="form-group col-6">
+          <label for="rating">Rating</label>
+          <select id="rating" class="custom-select" [formControlName]="'rating'" name="rating">
+            <option value="" selected>Choose...</option>
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+          </select>
+          <div class="invalid-feedback"
+               [ngStyle]="{ 'display': (movieForm.get('rating').touched && !movieForm.get('rating').valid) ? 'block' : 'none' }"
+          >Please choose rating</div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-6">
+          <label for="poster">Poster</label>
+          <input
+            type="text"
+            class="form-control"
+            id="poster"
+            required
+            placeholder="Enter Poster URL"
+            [(ngModel)]="poster"
+            formControlName="poster"
+            name="poster">
+          <div class="invalid-feedback"
+               [ngStyle]="{ 'display': (movieForm.get('poster').touched && !movieForm.get('poster').valid) ? 'block' : 'none' }"
+          >Please enter movie poster URL</div>
+        </div>
+        <div class="form-group col-6" *ngIf="poster">
+          <label for="preview">Preview</label>
+          <img [src]="poster" alt="Poster Preview" class="img-thumbnail d-block mx-auto" id="preview" style="max-width: 200px;">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="synopsis">Synopsis</label>
+        <textarea
+          class="form-control"
+          id="synopsis"
+          name="synopsis"
+          ngModel
+          required
+          rows="3"
+          placeholder="Enter Movie Synopsis"
+          formControlName="synopsis"
+        ></textarea>
+        <div class="invalid-feedback"
+             [ngStyle]="{ 'display': (movieForm.get('synopsis').touched && !movieForm.get('synopsis').valid) ? 'block' : 'none' }"
+        >Please enter movie synopsis</div>
+      </div>
+      <button routerLink="" type="button" class="btn btn-danger float-right ml-3">Cancel</button>
+      <button type="submit" class="btn btn-primary float-right" [disabled]="!movieForm.valid">Submit</button>
+    </form>
+  </div>
+</div>
