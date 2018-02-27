@@ -5,6 +5,7 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { MovieService } from '../movie.service';
 import { Movie } from '../movie.model';
 import { FormArray, FormControl, FormGroup, Validators} from '@angular/forms';
+import { Rating } from '../rating/rating.model';
 
 @Component({
   selector: 'app-movie-edit',
@@ -17,6 +18,7 @@ export class MovieEditComponent implements OnInit {
   id: number;
   movie: Movie;
   movieForm: FormGroup;
+  formSubmitSuccess: boolean = false;
 
   constructor(private genreService: GenreService,
               private movieService: MovieService,
@@ -64,10 +66,12 @@ export class MovieEditComponent implements OnInit {
       this.movieForm.get('caption').value || '',
       this.movieForm.get('poster').value,
       genre,
-      this.movieForm.get('rating').value,
+      new Rating(this.movieForm.get('rating').value),
       this.movieForm.get('synopsis').value
     );
     this.movieService.addMovie(newMovie);
+    this.formSubmitSuccess = true;
+    this.movieForm.reset();
   }
 
 }

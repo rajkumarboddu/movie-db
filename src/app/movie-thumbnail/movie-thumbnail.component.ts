@@ -11,6 +11,7 @@ import {Subject} from 'rxjs/Subject';
 export class MovieThumbnailComponent implements OnInit {
   @Input() movie: Movie;
   @Input() movieIndex: number;
+  @Input() isWatchListIndex: boolean;
 
   constructor(private movieService: MovieService) { }
 
@@ -18,7 +19,7 @@ export class MovieThumbnailComponent implements OnInit {
   }
 
   onToggleFromWatchList(index: number){
-    this.movieService.toggleFromWatchList(index);
+    this.movieService.toggleFromWatchList(index, this.isWatchListIndex);
     this.movieService.watchListChanged.next(this.movieService.getWatchList());
 
   }

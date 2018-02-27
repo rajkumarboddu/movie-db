@@ -64,22 +64,29 @@ export class MovieService {
     return this.watchListMovies.slice();
   }
 
-  toggleFromWatchList(movieIndex: number){
-    let exists = false;
-    const movieName = this.movies[movieIndex].name;
-    for(let i in this.watchListMovies) {
-      if(this.watchListMovies[i].name === movieName){
-        this.watchListMovies.splice(+i,1);
-        exists = true;
-        break;
+  toggleFromWatchList(movieIndex: number, isWatchListIndex: boolean){
+    if(isWatchListIndex) {
+      this.watchListMovies.splice(+movieIndex, 1);
+    } else{
+      let exists = false;
+      const movieName = this.movies[movieIndex].name;
+      for(let i in this.watchListMovies) {
+        if(this.watchListMovies[i].name === movieName){
+          this.watchListMovies.splice(+i,1);
+          exists = true;
+          break;
+        }
       }
-    }
-    if(!exists){
-      this.watchListMovies.push(this.movies[movieIndex]);
+      if(!exists){
+        this.watchListMovies.push(this.movies[movieIndex]);
+      }
     }
   }
 
-  isMovieInWatchList(index: number) {
+  isMovieInWatchList(index: number, isWatchListIndex: boolean) {
+    if(isWatchListIndex){
+      return true;
+    }
     for(let movie of this.watchListMovies) {
       if(movie.name === this.movies[index].name){
         return true;
@@ -89,7 +96,7 @@ export class MovieService {
   }
 
   deleteMovie(movieIndex: number) {
-    this.toggleFromWatchList(movieIndex);
+    this.toggleFromWatchList(movieIndex, false);
     this.movies.splice(movieIndex,1);
   }
 
