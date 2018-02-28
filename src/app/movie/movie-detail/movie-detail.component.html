@@ -6,16 +6,33 @@
       class="img-fluid">
   </div>
   <div class="col-8">
-    <h1>{{ movie.name }}</h1>
-    <p class="text-muted" *ngIf="movie.caption !== ''">{{ movie.caption }}</p>
-    <p>
-      <app-rating [rating]="movie.rating.rating"></app-rating>
-    </p>
-    <p>
-      {{ movie.getMovieGenres() }}
-    </p>
-    <p>
-      {{ movie.synopsis }}
-    </p>
+    <div class="row">
+      <div class="col">
+        <h1>{{ movie.name }}</h1>
+        <p class="text-muted" *ngIf="movie.caption !== ''">{{ movie.caption }}</p>
+        <p>
+          <app-rating [rating]="movie.rating.rating"></app-rating>
+        </p>
+        <p>
+          {{ movie.getMovieGenres() }}
+        </p>
+        <p>
+          {{ movie.synopsis }}
+        </p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col d-flex justify-content-end">
+        <a routerLink="/movies/{{ id }}/edit" class="btn btn-info btn-sm">
+          <i class="fa fa-pencil"> Edit</i>
+        </a>
+        <button class="btn btn-danger btn-sm ml-2" (click)="onDelete()">
+          <i class="fa fa-trash"> Delete</i>
+        </button>
+        <button class="btn btn-success btn-sm ml-2" (click)="onAddToWatchList()">
+          <i class="fa fa-plus"> Add to Watch List</i>
+        </button>
+      </div>
+    </div>
   </div>
 </div>

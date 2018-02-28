@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {GenreService} from '../movie/genre/genre.service';
+import {Genre} from '../movie/genre/genre.model';
 
 @Component({
   selector: 'app-header',
@@ -6,10 +8,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
+  genres: Genre[];
 
-  constructor() { }
+  constructor(private genreService: GenreService) { }
 
   ngOnInit() {
+    this.genres = this.genreService.getGenres();
   }
 
 }

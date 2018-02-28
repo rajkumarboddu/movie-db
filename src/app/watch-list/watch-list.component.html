@@ -4,6 +4,6 @@
   </div>
 </div>
 <p *ngIf="movies.length===0" class="text-muted">No movies added to your Wish List</p>
-<div class="card-deck">
+<div class="card-deck justify-content-lg-around">
   <app-movie-thumbnail *ngFor="let movie of movies; let i = index" [movie]="movie" [movieIndex]="i" [pageName]="'watchList'"></app-movie-thumbnail>
 </div>

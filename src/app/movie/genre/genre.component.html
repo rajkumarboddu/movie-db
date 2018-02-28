@@ -1,3 +1,8 @@
-<p>
-  genre works!
-</p>
+<div class="row">
+  <div class="col py-5">
+    <h3>{{ genreName }} Movies</h3>
+  </div>
+</div>
+<div class="card-deck justify-content-lg-around">
+  <app-movie-thumbnail *ngFor="let movie of movies; let i = index" [movie]="movie" [movieIndex]="i" [pageName]="'genre'"></app-movie-thumbnail>
+</div>

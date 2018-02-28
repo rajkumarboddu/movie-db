@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Params } from '@angular/router';
+import { Movie } from '../movie.model';
+import {MovieService} from '../movie.service';
 
 @Component({
   selector: 'app-genre',
@@ -6,10 +9,19 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./genre.component.css']
 })
 export class GenreComponent implements OnInit {
+  genreName: string;
+  movies: Movie[];
 
-  constructor() { }
+
+  constructor(private movieService: MovieService, private route: ActivatedRoute) { }
 
   ngOnInit() {
+    this.route.params.subscribe(
+      (params: Params) => {
+        this.genreName = params['genreName'];
+        this.movies = this.movieService.getMoviesByGenre(this.genreName);
+      }
+    )
   }
 
 }

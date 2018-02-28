@@ -5,6 +5,7 @@ import { HomeComponent } from './home/home.component';
 import { MovieComponent } from './movie/movie.component';
 import { MovieEditComponent } from './movie/movie-edit/movie-edit.component';
 import {MovieDetailComponent} from './movie/movie-detail/movie-detail.component';
+import {GenreComponent} from './movie/genre/genre.component';
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent, pathMatch: 'full' },
@@ -13,7 +14,8 @@ const appRoutes: Routes = [
       { path: 'create', component: MovieEditComponent },
       { path: ':id', component: MovieDetailComponent },
       { path: ':id/edit', component: MovieEditComponent }
-  ]}
+  ]},
+  { path: 'genres/:genreName', component: GenreComponent }
 ];
 
 @NgModule({

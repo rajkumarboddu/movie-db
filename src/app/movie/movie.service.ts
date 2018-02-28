@@ -105,4 +105,16 @@ export class MovieService {
     this.movies[index] = updatedMovie;
   }
 
+  getMoviesByGenre(genreName: string): Movie[] {
+    let movies: Movie[] = [];
+    for(let movie of this.movies) {
+      for(let genre of movie.genre) {
+        if(genre.name === genreName) {
+          movies.push(movie);
+        }
+      }
+    }
+    return movies;
+  }
+
 }
