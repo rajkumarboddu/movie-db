@@ -15,6 +15,7 @@ import { HomeComponent } from './home/home.component';
 import { MovieEditComponent } from './movie/movie-edit/movie-edit.component';
 import { GenreService } from './movie/genre/genre.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MovieDetailComponent } from './movie/movie-detail/movie-detail.component';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     GenreComponent,
     MovieThumbnailComponent,
     HomeComponent,
-    MovieEditComponent
+    MovieEditComponent,
+    MovieDetailComponent
   ],
   imports: [
     BrowserModule,

@@ -4,13 +4,15 @@ import { WatchListComponent } from './watch-list/watch-list.component';
 import { HomeComponent } from './home/home.component';
 import { MovieComponent } from './movie/movie.component';
 import { MovieEditComponent } from './movie/movie-edit/movie-edit.component';
+import {MovieDetailComponent} from './movie/movie-detail/movie-detail.component';
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent, pathMatch: 'full' },
   { path: 'watch-list', component: WatchListComponent },
-  { path: 'movies/create', component: MovieEditComponent },
-  { path: 'movies/:id', component: MovieComponent, children:[
-      { path: 'edit', component: MovieEditComponent }
+  { path: 'movies', component: MovieComponent, children:[
+      { path: 'create', component: MovieEditComponent },
+      { path: ':id', component: MovieDetailComponent },
+      { path: ':id/edit', component: MovieEditComponent }
   ]}
 ];
 

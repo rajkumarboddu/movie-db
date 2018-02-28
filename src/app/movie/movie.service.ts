@@ -6,6 +6,8 @@ import { Subject } from 'rxjs/Subject';
 export class MovieService {
   public watchListChanged = new Subject();
   public moviesChanged = new Subject();
+  public editModeChanged = new Subject();
+  editedMovieIndex: number;
 
   private movies: Movie[] = [
     new Movie(
@@ -64,40 +66,22 @@ export class MovieService {
     return this.watchListMovies.slice();
   }
 
-  toggleFromWatchList(movieIndex: number, isWatchListIndex: boolean){
-    if(isWatchListIndex) {
-      this.watchListMovies.splice(+movieIndex, 1);
-    } else{
-      let exists = false;
-      const movieName = this.movies[movieIndex].name;
-      for(let i in this.watchListMovies) {
-        if(this.watchListMovies[i].name === movieName){
-          this.watchListMovies.splice(+i,1);
-          exists = true;
-          break;
-        }
-      }
-      if(!exists){
-        this.watchListMovies.push(this.movies[movieIndex]);
-      }
-    }
+  removeFromWatchList(index: number) {
+    this.watchListMovies.splice(index, 1);
   }
 
-  isMovieInWatchList(index: number, isWatchListIndex: boolean) {
-    if(isWatchListIndex){
+  addToWatchList(index: number): number {
+    this.watchListMovies.push(this.movies.slice()[index]);
+    return this.watchListMovies.length-1;
+  }
+
+  deleteMovie(movieIndex: number): boolean {
+    if(this.getWatchListIndex(movieIndex) !== -1){
+      this.removeFromWatchList(movieIndex);
       return true;
     }
-    for(let movie of this.watchListMovies) {
-      if(movie.name === this.movies[index].name){
-        return true;
-      }
-    }
-    return false;
-  }
-
-  deleteMovie(movieIndex: number) {
-    this.toggleFromWatchList(movieIndex, false);
     this.movies.splice(movieIndex,1);
+    return false;
   }
 
   getMovie(movieIndex: number): Movie {
@@ -106,6 +90,19 @@ export class MovieService {
 
   addMovie(newMovie: Movie) {
     this.movies.push(newMovie);
+  }
+
+  getWatchListIndex(index: number): number {
+    for(let i in this.watchListMovies) {
+      if(this.watchListMovies[i].name === this.movies[index].name){
+        return +i;
+      }
+    }
+    return -1;
+  }
+
+  updateMovie(index: number, updatedMovie: Movie) {
+    this.movies[index] = updatedMovie;
   }
 
 }

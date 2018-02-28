@@ -5,6 +5,6 @@
   </div>
 </div>
 <div class="card-deck justify-content-lg-around">
-  <app-movie-thumbnail *ngFor="let movie of movies; let i = index" [movie]="movie" [movieIndex]="i" [isWatchListIndex]="false"></app-movie-thumbnail>
+  <app-movie-thumbnail *ngFor="let movie of movies; let i = index" [movie]="movie" [movieIndex]="i" [pageName]="'home'"></app-movie-thumbnail>
 </div>
 

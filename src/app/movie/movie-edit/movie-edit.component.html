@@ -1,6 +1,9 @@
 <div class="row py-5">
   <div class="col">
-    <h1>New Movie</h1>
+    <h1 *ngIf="!editMode; else editModeHeading">New Movie</h1>
+    <ng-template #editModeHeading>
+      <h1>Edit Movie</h1>
+    </ng-template>
   </div>
 </div>
 <div class="row">
@@ -77,16 +80,16 @@
             id="poster"
             required
             placeholder="Enter Poster URL"
-            [(ngModel)]="poster"
+            #poster
             formControlName="poster"
             name="poster">
           <div class="invalid-feedback"
                [ngStyle]="{ 'display': (movieForm.get('poster').touched && !movieForm.get('poster').valid) ? 'block' : 'none' }"
           >Please enter movie poster URL</div>
         </div>
-        <div class="form-group col-6" *ngIf="poster">
+        <div class="form-group col-6" *ngIf="poster.value">
           <label for="preview">Preview</label>
-          <img [src]="poster" alt="Poster Preview" class="img-thumbnail d-block mx-auto" id="preview" style="max-width: 200px;">
+          <img [src]="poster.value" alt="Poster Preview" class="img-thumbnail d-block mx-auto" id="preview" style="max-width: 200px;">
         </div>
       </div>
       <div class="form-group">
@@ -95,7 +98,6 @@
           class="form-control"
           id="synopsis"
           name="synopsis"
-          ngModel
           required
           rows="3"
           placeholder="Enter Movie Synopsis"
@@ -105,8 +107,8 @@
              [ngStyle]="{ 'display': (movieForm.get('synopsis').touched && !movieForm.get('synopsis').valid) ? 'block' : 'none' }"
         >Please enter movie synopsis</div>
       </div>
-      <button routerLink="" type="button" class="btn btn-danger float-right ml-3">Cancel</button>
-      <button type="submit" class="btn btn-primary float-right" [disabled]="!movieForm.valid">Submit</button>
+      <button type="button" class="btn btn-danger float-right ml-3" (click)="onCancel()">Cancel</button>
+      <button type="submit" class="btn btn-primary float-right" [disabled]="!movieForm.valid"> {{ editMode ? 'Update' : 'Submit' }}</button>
     </form>
   </div>
 </div>

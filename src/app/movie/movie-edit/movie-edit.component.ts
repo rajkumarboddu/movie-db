@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { GenreService } from '../genre/genre.service';
 import { Genre } from '../genre/genre.model';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { MovieService } from '../movie.service';
 import { Movie } from '../movie.model';
 import { FormArray, FormControl, FormGroup, Validators} from '@angular/forms';
 import { Rating } from '../rating/rating.model';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-movie-edit',
@@ -14,38 +15,85 @@ import { Rating } from '../rating/rating.model';
 })
 export class MovieEditComponent implements OnInit {
   genres: Genre[];
-  poster: string;
   id: number;
   movie: Movie;
   movieForm: FormGroup;
   formSubmitSuccess: boolean = false;
+  editMode: boolean = false;
 
   constructor(private genreService: GenreService,
               private movieService: MovieService,
-              private router: ActivatedRoute) { }
+              private router: Router,
+              private route: ActivatedRoute,
+              private location: Location) { }
 
   ngOnInit() {
     this.genres = this.genreService.getGenres();
-    this.router.params.subscribe(
+    this.route.params.subscribe(
       (params: Params) => {
-        this.id = params['id'];
-        this.movie = this.movieService.getMovie(this.id);
+        this.id = params['id'] ? +params['id'] : null;
+        if(this.id !== null){
+          this.movie = this.movieService.getMovie(this.id);
+          this.editMode = true;
+        }
       }
     );
-    this.movieForm = new FormGroup({
+    this.initForm();
+  }
+
+  initForm() {
+    let formObj = {
       'name': new FormControl(null, Validators.required),
       'caption': new FormControl(null),
-      'genre': new FormArray(this.getGenreFormControls(), Validators.required),
+      'genre': new FormArray(this.getGenreFormControls(), [Validators.required, this.requireAtleastOneGenre.bind(this)]),
       'rating': new FormControl("", Validators.required),
       'poster': new FormControl(null, Validators.required),
       'synopsis': new FormControl(null, Validators.required)
-    });
+    };
+    if(this.editMode) {
+      formObj = {
+        'name': new FormControl(this.movie.name, Validators.required),
+        'caption': new FormControl(this.movie.caption),
+        'genre': new FormArray(this.getGenreFormControls(), [Validators.required, this.requireAtleastOneGenre.bind(this)]),
+        'rating': new FormControl(this.movie.rating.rating, Validators.required),
+        'poster': new FormControl(this.movie.poster, Validators.required),
+        'synopsis': new FormControl(this.movie.synopsis, Validators.required)
+      }
+    }
+    this.movieForm = new FormGroup(formObj);
+  }
+
+  requireAtleastOneGenre(formArray: FormArray): {[s: string]: boolean} {
+    let genreControls = formArray.controls;
+    let count = 0;
+    for(let i in genreControls) {
+      if(genreControls[i].value === false){
+        count++;
+      }
+    }
+    if(count === genreControls.length){
+      return {'noGenreSelected': true};
+    }
+    return null;
   }
 
   getGenreFormControls(): FormControl[] {
     const formControls: FormControl[] = [];
-    for(let genre of this.genres) {
-      formControls.push(new FormControl(false));
+    if(this.editMode){
+      for(let genre of this.genres) {
+        let state = false;
+        for(let eGenre of this.movie.genre) {
+          if(eGenre.name === genre.name){
+            state = true;
+            break;
+          }
+        }
+        formControls.push(new FormControl(state));
+      }
+    } else{
+      for(let genre of this.genres) {
+        formControls.push(new FormControl(false));
+      }
     }
     return formControls;
   }
@@ -69,9 +117,19 @@ export class MovieEditComponent implements OnInit {
       new Rating(this.movieForm.get('rating').value),
       this.movieForm.get('synopsis').value
     );
-    this.movieService.addMovie(newMovie);
+    if(this.editMode){
+      this.movieService.updateMovie(this.id, newMovie);
+      this.router.navigate(['../'], {relativeTo: this.route});
+    } else{
+      this.movieService.addMovie(newMovie);
+      this.movieForm.reset();
+    }
     this.formSubmitSuccess = true;
-    this.movieForm.reset();
+
+  }
+
+  onCancel(){
+    this.location.back();
   }
 
 }
