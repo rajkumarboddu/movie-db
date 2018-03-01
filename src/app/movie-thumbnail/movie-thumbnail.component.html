@@ -1,4 +1,4 @@
-<div class="card mx-auto" style="width: 200px;">
+<div class="card my-3 mx-auto mx-md-3 mx-lg-3" style="width: 200px;" [ngSwitch]="pageName">
   <img class="card-img-top" style="height: 200px; cursor: pointer;" src="{{ movie.poster }}" alt="{{ movie.name + ' ' + movie.caption }}" routerLink="/movies/{{ movieIndex }}">
   <div class="card-body" style="cursor:pointer;" routerLink="/movies/{{ movieIndex }}">
     <h5 class="card-title" style="font-size: 1rem;">
@@ -9,7 +9,7 @@
     </h5>
     <app-rating [rating]="movie.rating.rating"></app-rating>
   </div>
-  <div class="card-footer" *ngIf="pageName==='home'; else watchListFooter">
+  <div class="card-footer" *ngSwitchCase="'home'">
     <i class="fa fa-eye float-right"
        style="cursor: pointer;"
        *ngIf="watchListIndex === -1; else inWatchList"
@@ -30,12 +30,10 @@
        routerLink="/movies/{{ (watchListIndex !== -1) ? getMovieIndex(movieIndex) : movieIndex }}/edit"
     ></a>
   </div>
-  <ng-template #watchListFooter>
-    <div class="card-footer" >
-      <i class="fa fa-eye float-right text-danger"
-         style="cursor: pointer;"
-         (click)="onRemoveFromWatchList(movieIndex)"
-      ></i>
-    </div>
-  </ng-template>
+  <div class="card-footer" *ngSwitchCase="'watchList'">
+    <i class="fa fa-eye float-right text-danger"
+       style="cursor: pointer;"
+       (click)="onRemoveFromWatchList(movieIndex)"
+    ></i>
+  </div>
 </div>

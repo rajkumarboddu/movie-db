@@ -16,6 +16,7 @@ import { MovieEditComponent } from './movie/movie-edit/movie-edit.component';
 import { GenreService } from './movie/genre/genre.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MovieDetailComponent } from './movie/movie-detail/movie-detail.component';
+import { FilterMovieByGenrePipe } from './movie/filter-movie-by-genre.pipe';
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import { MovieDetailComponent } from './movie/movie-detail/movie-detail.componen
     MovieThumbnailComponent,
     HomeComponent,
     MovieEditComponent,
-    MovieDetailComponent
+    MovieDetailComponent,
+    FilterMovieByGenrePipe
   ],
   imports: [
     BrowserModule,

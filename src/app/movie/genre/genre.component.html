@@ -3,6 +3,6 @@
     <h3>{{ genreName }} Movies</h3>
   </div>
 </div>
-<div class="card-deck justify-content-lg-around">
-  <app-movie-thumbnail *ngFor="let movie of movies; let i = index" [movie]="movie" [movieIndex]="i" [pageName]="'genre'"></app-movie-thumbnail>
+<div class="card-deck">
+  <app-movie-thumbnail *ngFor="let movie of movies | filterMovieByGenre:genreName; let i = index" [movie]="movie" [movieIndex]="i" [pageName]="'genre'"></app-movie-thumbnail>
 </div>

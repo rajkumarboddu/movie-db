@@ -19,7 +19,7 @@ export class GenreComponent implements OnInit {
     this.route.params.subscribe(
       (params: Params) => {
         this.genreName = params['genreName'];
-        this.movies = this.movieService.getMoviesByGenre(this.genreName);
+        this.movies = this.movieService.getMovies();
       }
     )
   }

@@ -4,7 +4,7 @@
     <a routerLink="/movies/create" class="btn btn-success">New Movie</a>
   </div>
 </div>
-<div class="card-deck justify-content-lg-around">
+<div class="card-deck">
   <app-movie-thumbnail *ngFor="let movie of movies; let i = index" [movie]="movie" [movieIndex]="i" [pageName]="'home'"></app-movie-thumbnail>
 </div>
 
