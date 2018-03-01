@@ -17,6 +17,10 @@ import { GenreService } from './movie/genre/genre.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MovieDetailComponent } from './movie/movie-detail/movie-detail.component';
 import { FilterMovieByGenrePipe } from './movie/filter-movie-by-genre.pipe';
+import { DataService } from './shared/data.service';
+import { HttpModule } from '@angular/http';
+import { SignupComponent } from './auth/signup/signup.component';
+import { LoginComponent } from './auth/login/login.component';
 
 
 @NgModule({
@@ -31,15 +35,18 @@ import { FilterMovieByGenrePipe } from './movie/filter-movie-by-genre.pipe';
     HomeComponent,
     MovieEditComponent,
     MovieDetailComponent,
-    FilterMovieByGenrePipe
+    FilterMovieByGenrePipe,
+    SignupComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpModule
   ],
-  providers: [MovieService, GenreService],
+  providers: [MovieService, GenreService, DataService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

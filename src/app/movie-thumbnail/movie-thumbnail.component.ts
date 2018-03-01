@@ -48,4 +48,8 @@ export class MovieThumbnailComponent implements OnInit {
     }
   }
 
+  getMovieGenresString() {
+    return this.movieService.getMovieGenresString(this.movieIndex);
+  }
+
 }

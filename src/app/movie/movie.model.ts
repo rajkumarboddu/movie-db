@@ -10,12 +10,4 @@ export class Movie {
     public rating: Rating,
     public synopsis: string
   ) {}
-
-  getMovieGenres() {
-    let genres = [];
-    for(let genre of this.genre) {
-      genres.push(genre.name);
-    }
-    return genres.join(", ");
-  }
 }

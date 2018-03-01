@@ -36,4 +36,8 @@ export class MovieDetailComponent implements OnInit {
     this.movieService.addToWatchList(this.id);
   }
 
+  getMovieGenresString() {
+    return this.movieService.getMovieGenresString(this.id);
+  }
+
 }

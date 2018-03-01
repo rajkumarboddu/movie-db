@@ -6,8 +6,6 @@ import { Subject } from 'rxjs/Subject';
 export class MovieService {
   public watchListChanged = new Subject();
   public moviesChanged = new Subject();
-  public editModeChanged = new Subject();
-  editedMovieIndex: number;
 
   private movies: Movie[] = [
     new Movie(
@@ -103,6 +101,20 @@ export class MovieService {
 
   updateMovie(index: number, updatedMovie: Movie) {
     this.movies[index] = updatedMovie;
+  }
+
+  setMovies(movies: Movie[]) {
+    this.movies = movies;
+    this.moviesChanged.next(this.movies.slice());
+  }
+
+  getMovieGenresString(index: number) {
+    let genres = [];
+    const movie = this.movies[index];
+    for(let genre of movie.genre) {
+      genres.push(genre.name);
+    }
+    return genres.join(", ");
   }
 
 }
