@@ -14,7 +14,7 @@ export class SignupComponent implements OnInit {
   constructor(private authService: AuthService) { }
 
   ngOnInit() {
-    this.authService.signupSuccess.subscribe(
+    this.authService.signupStatus.subscribe(
       (result: boolean) => {
         this.signUpSuccess = result;
         this.signUpError = !result;
@@ -23,7 +23,7 @@ export class SignupComponent implements OnInit {
   }
 
   onSubmit(form: NgForm): void {
-    this.authService.signupUser(form.controls.email.value, form.controls.password.value);
+    this.authService.signupUser(form.value.email, form.value.password);
     form.reset();
   }
 

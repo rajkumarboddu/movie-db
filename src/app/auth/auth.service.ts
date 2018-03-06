@@ -3,20 +3,30 @@ import { Subject } from 'rxjs/Subject';
 
 export class AuthService {
 
-  signupSuccess = new Subject();
+  signupStatus = new Subject();
 
   signupUser(email: string, password: string) {
     firebase.auth().createUserWithEmailAndPassword(email, password)
       .then(
         (response) => {
-          this.signupSuccess.next(true);
+          this.signupStatus.next(true);
         }
       )
       .catch(
         error => {
-          this.signupSuccess.next(false);
+          this.signupStatus.next(false);
           console.log(error)
         }
+      );
+  }
+
+  signinUser(email: string, password: string) {
+    firebase.auth().signInWithEmailAndPassword(email, password)
+      .then(
+        (response) => console.log(response)
+      )
+      .catch(
+        error => console.log(error)
       );
   }
 

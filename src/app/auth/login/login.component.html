@@ -2,16 +2,22 @@
   <div class="col col-lg-4 py-5">
     <h1>Login</h1>
     <hr>
-    <form>
+    <form (ngSubmit)="onSubmit(f)" #f="ngForm">
       <div class="form-group">
         <label for="email">Email</label>
-        <input type="email" class="form-control" id="email" placeholder="Enter email">
+        <input type="email" class="form-control" id="email" name="email" ngModel email #email="ngModel" required placeholder="Enter email">
+        <div class="invalid-feedback"
+             [ngStyle]="{ 'display': (email.touched && !email.valid) ? 'block' : 'none' }"
+        >Enter a valid email</div>
       </div>
       <div class="form-group">
         <label for="password">Password</label>
-        <input type="password" class="form-control" id="password" placeholder="Enter Password">
+        <input type="password" class="form-control" id="password" name="password" ngModel #password="ngModel" placeholder="Enter Password">
+        <div class="invalid-feedback"
+             [ngStyle]="{ 'display': (password.touched && password.value.length<6) ? 'block' : 'none' }"
+        >Password should be 6 characters long</div>
       </div>
-      <button type="submit" class="btn btn-success float-right">Submit</button>
+      <button type="submit" class="btn btn-success float-right" [disabled]="!f.valid || (password.value!==null && password.value.length<6)">Submit</button>
     </form>
   </div>
 </div>
