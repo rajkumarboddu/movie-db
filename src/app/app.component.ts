@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import * as firebase from 'firebase';
 
 @Component({
   selector: 'app-root',
@@ -10,6 +11,11 @@ export class AppComponent implements OnInit{
 
   constructor() {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    firebase.initializeApp({
+      apiKey: "AIzaSyAH8NcGv0b4Pf3-Kxfmivl7xSQNJQOTCXQ",
+      authDomain: "movie-db-92f01.firebaseapp.com"
+    });
+  }
 
 }

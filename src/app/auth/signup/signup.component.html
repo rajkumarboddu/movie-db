@@ -1,17 +1,35 @@
 <div class="row justify-content-md-center">
   <div class="col col-lg-4 py-5">
+    <div class="alert alert-success" role="alert" *ngIf="f.submitted && signUpSuccess">
+      You have been signed up successfully
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close" (click)="signUpSuccess = !signUpSuccess">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="alert alert-danger" role="alert" *ngIf="f.submitted && signUpError">
+      Something went wrong!
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close" (click)="signUpFailed = !signUpFailed">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
     <h1>Signup</h1>
     <hr>
-    <form (ngSubmit)="onSubmit(f)" #f>
+    <form (ngSubmit)="onSubmit(f)" #f="ngForm">
       <div class="form-group">
         <label for="email">Email</label>
-        <input type="email" class="form-control" id="email" name="email" ngModel email required placeholder="Enter email">
+        <input type="email" class="form-control" id="email" name="email" ngModel email #email="ngModel" required placeholder="Enter email">
+        <div class="invalid-feedback"
+             [ngStyle]="{ 'display': (email.touched && !email.valid) ? 'block' : 'none' }"
+        >Enter a valid email</div>
       </div>
       <div class="form-group">
         <label for="password">Password</label>
-        <input type="password" class="form-control" id="password" name="password" ngModel placeholder="Enter Password">
+        <input type="password" class="form-control" id="password" name="password" ngModel #password="ngModel" placeholder="Enter Password">
+        <div class="invalid-feedback"
+             [ngStyle]="{ 'display': (password.touched && password.value.length<6) ? 'block' : 'none' }"
+        >Password should be 6 characters long</div>
       </div>
-      <button type="submit" class="btn btn-success float-right" >Submit</button>
+      <button type="submit" class="btn btn-success float-right" [disabled]="!f.valid || (password.value!==null && password.value.length<6)">Submit</button>
     </form>
   </div>
 </div>

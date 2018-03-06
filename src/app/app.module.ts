@@ -21,6 +21,7 @@ import { DataService } from './shared/data.service';
 import { HttpModule } from '@angular/http';
 import { SignupComponent } from './auth/signup/signup.component';
 import { LoginComponent } from './auth/login/login.component';
+import { AuthService } from './auth/auth.service';
 
 
 @NgModule({
@@ -46,7 +47,7 @@ import { LoginComponent } from './auth/login/login.component';
     ReactiveFormsModule,
     HttpModule
   ],
-  providers: [MovieService, GenreService, DataService],
+  providers: [MovieService, GenreService, DataService, AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
