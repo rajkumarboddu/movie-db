@@ -22,6 +22,7 @@ import { HttpModule } from '@angular/http';
 import { SignupComponent } from './auth/signup/signup.component';
 import { LoginComponent } from './auth/login/login.component';
 import { AuthService } from './auth/auth.service';
+import { AuthGuardService } from './auth/auth-guard.service';
 
 
 @NgModule({
@@ -47,7 +48,7 @@ import { AuthService } from './auth/auth.service';
     ReactiveFormsModule,
     HttpModule
   ],
-  providers: [MovieService, GenreService, DataService, AuthService],
+  providers: [MovieService, GenreService, DataService, AuthService, AuthGuardService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

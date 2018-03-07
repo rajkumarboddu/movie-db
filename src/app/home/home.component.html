@@ -1,7 +1,7 @@
 <div class="row">
   <div class="col d-flex justify-content-between py-5">
     <h3>Movies</h3>
-    <a routerLink="/movies/create" class="btn btn-success">New Movie</a>
+    <a routerLink="/movies/create" class="btn btn-success" *ngIf="authService.isAuthenticated()">New Movie</a>
   </div>
 </div>
 <div class="card-deck">

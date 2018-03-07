@@ -1,6 +1,7 @@
-import { AfterContentChecked, Component, Input, OnInit} from '@angular/core';
+import { Component, Input, OnInit} from '@angular/core';
 import { Movie } from '../movie/movie.model';
 import { MovieService } from '../movie/movie.service';
+import { AuthService } from '../auth/auth.service';
 
 @Component({
   selector: 'app-movie-thumbnail',
@@ -13,7 +14,7 @@ export class MovieThumbnailComponent implements OnInit {
   @Input() pageName: string;
   watchListIndex: number;
 
-  constructor(private movieService: MovieService) { }
+  constructor(private movieService: MovieService, private authService: AuthService) { }
 
   ngOnInit() {
     this.watchListIndex = this.movieService.getWatchListIndex(this.movieIndex);

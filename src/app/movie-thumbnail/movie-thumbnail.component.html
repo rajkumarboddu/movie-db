@@ -9,31 +9,33 @@
     </h5>
     <app-rating [rating]="movie.rating.rating"></app-rating>
   </div>
-  <div class="card-footer" *ngSwitchCase="'home'">
-    <i class="fa fa-eye float-right"
-       style="cursor: pointer;"
-       *ngIf="watchListIndex === -1; else inWatchList"
-       (click)="onAddToWatchList(movieIndex)"
-    ></i>
-    <ng-template #inWatchList>
-      <i class="fa fa-eye float-right text-success"
+  <ng-template [ngIf]="authService.isAuthenticated()">
+    <div class="card-footer" *ngSwitchCase="'home'">
+      <i class="fa fa-eye float-right"
+         style="cursor: pointer;"
+         *ngIf="watchListIndex === -1; else inWatchList"
+         (click)="onAddToWatchList(movieIndex)"
+      ></i>
+      <ng-template #inWatchList>
+        <i class="fa fa-eye float-right text-success"
+           style="cursor: pointer;"
+           (click)="onRemoveFromWatchList(movieIndex)"
+        ></i>
+      </ng-template>
+      <i class="fa fa-trash float-right text-danger mx-3"
+         style="cursor: pointer;"
+         (click)="onDeleteMovie(movieIndex)"
+      ></i>
+      <a class="fa fa-pencil float-right text-info"
+         style="cursor: pointer; text-decoration: none;"
+         routerLink="/movies/{{ (watchListIndex !== -1) ? getMovieIndex(movieIndex) : movieIndex }}/edit"
+      ></a>
+    </div>
+    <div class="card-footer" *ngSwitchCase="'watchList'">
+      <i class="fa fa-eye float-right text-danger"
          style="cursor: pointer;"
          (click)="onRemoveFromWatchList(movieIndex)"
       ></i>
-    </ng-template>
-    <i class="fa fa-trash float-right text-danger mx-3"
-       style="cursor: pointer;"
-       (click)="onDeleteMovie(movieIndex)"
-    ></i>
-    <a class="fa fa-pencil float-right text-info"
-       style="cursor: pointer; text-decoration: none;"
-       routerLink="/movies/{{ (watchListIndex !== -1) ? getMovieIndex(movieIndex) : movieIndex }}/edit"
-    ></a>
-  </div>
-  <div class="card-footer" *ngSwitchCase="'watchList'">
-    <i class="fa fa-eye float-right text-danger"
-       style="cursor: pointer;"
-       (click)="onRemoveFromWatchList(movieIndex)"
-    ></i>
-  </div>
+    </div>
+  </ng-template>
 </div>

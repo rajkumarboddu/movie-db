@@ -3,6 +3,7 @@ import { MovieService } from '../movie.service';
 import { ActivatedRoute, Params} from '@angular/router';
 import { Movie } from '../movie.model';
 import { Location } from '@angular/common';
+import { AuthService } from '../../auth/auth.service';
 
 @Component({
   selector: 'app-movie-detail',
@@ -15,7 +16,8 @@ export class MovieDetailComponent implements OnInit {
 
   constructor(private movieService: MovieService,
               private route: ActivatedRoute,
-              private location: Location) { }
+              private location: Location,
+              private authService: AuthService) { }
 
   ngOnInit() {
     this.route.params.subscribe(

@@ -21,7 +21,7 @@
         </p>
       </div>
     </div>
-    <div class="row">
+    <div class="row" *ngIf="authService.isAuthenticated()">
       <div class="col d-flex justify-content-end">
         <a routerLink="/movies/{{ id }}/edit" class="btn btn-info btn-sm">
           <i class="fa fa-pencil"> Edit</i>

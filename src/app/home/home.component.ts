@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Movie } from '../movie/movie.model';
 import { MovieService } from '../movie/movie.service';
 import { Subscription } from 'rxjs/Subscription';
+import { AuthService } from '../auth/auth.service';
 
 @Component({
   selector: 'app-home',
@@ -12,7 +13,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   movies: Movie[];
   private movieChangesSubscription = new Subscription();
 
-  constructor(private movieService: MovieService) {}
+  constructor(private movieService: MovieService, private authService: AuthService) {}
 
   ngOnInit() {
     this.movies = this.movieService.getMovies();

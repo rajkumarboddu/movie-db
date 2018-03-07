@@ -8,16 +8,17 @@ import { MovieDetailComponent } from './movie/movie-detail/movie-detail.componen
 import { GenreComponent } from './movie/genre/genre.component';
 import { SignupComponent } from './auth/signup/signup.component';
 import { LoginComponent } from './auth/login/login.component';
+import { AuthGuardService } from './auth/auth-guard.service';
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent, pathMatch: 'full' },
   { path: 'signup', component: SignupComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'watch-list', component: WatchListComponent },
+  { path: 'watch-list', component: WatchListComponent, canActivate: [AuthGuardService] },
   { path: 'movies', component: MovieComponent, children:[
-      { path: 'create', component: MovieEditComponent },
+      { path: 'create', component: MovieEditComponent, canActivate: [AuthGuardService] },
       { path: ':id', component: MovieDetailComponent },
-      { path: ':id/edit', component: MovieEditComponent }
+      { path: ':id/edit', component: MovieEditComponent, canActivate: [AuthGuardService] }
   ]},
   { path: 'genres/:genreName', component: GenreComponent }
 ];

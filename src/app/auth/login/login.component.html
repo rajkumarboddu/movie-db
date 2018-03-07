@@ -1,5 +1,11 @@
 <div class="row justify-content-md-center">
   <div class="col col-lg-4 py-5">
+    <div class="alert alert-danger" role="alert" *ngIf="f.submitted && invalidPassword">
+      Invalid Email/Password
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close" (click)="invalidPassword = !invalidPassword">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
     <h1>Login</h1>
     <hr>
     <form (ngSubmit)="onSubmit(f)" #f="ngForm">
@@ -17,7 +23,10 @@
              [ngStyle]="{ 'display': (password.touched && password.value.length<6) ? 'block' : 'none' }"
         >Password should be 6 characters long</div>
       </div>
-      <button type="submit" class="btn btn-success float-right" [disabled]="!f.valid || (password.value!==null && password.value.length<6)">Submit</button>
+      <button type="submit"
+              class="btn btn-success float-right"
+              [disabled]="!f.valid || (password.value!==null && password.value.length<6)"
+      >Submit</button>
     </form>
   </div>
 </div>

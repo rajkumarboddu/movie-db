@@ -3,6 +3,8 @@ import { GenreService } from '../movie/genre/genre.service';
 import { Genre } from '../movie/genre/genre.model';
 import { DataService } from '../shared/data.service';
 import { Response } from '@angular/http';
+import { AuthService } from '../auth/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -12,7 +14,10 @@ import { Response } from '@angular/http';
 export class HeaderComponent implements OnInit {
   genres: Genre[];
 
-  constructor(private genreService: GenreService, private dataService: DataService) { }
+  constructor(private genreService: GenreService,
+              private dataService: DataService,
+              private authService: AuthService,
+              private router: Router) { }
 
   ngOnInit() {
     this.genres = this.genreService.getGenres();
@@ -25,6 +30,11 @@ export class HeaderComponent implements OnInit {
           console.log(response);
         }
       );
+  }
+
+  onLogout() {
+    this.authService.logout();
+    this.router.navigate(['/login']);
   }
 
 }
