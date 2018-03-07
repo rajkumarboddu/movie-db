@@ -23,15 +23,6 @@ export class HeaderComponent implements OnInit {
     this.genres = this.genreService.getGenres();
   }
 
-  onSaveMovies() {
-    this.dataService.saveMovies()
-      .subscribe(
-        (response: Response) => {
-          console.log(response);
-        }
-      );
-  }
-
   onLogout() {
     this.authService.logout();
     this.router.navigate(['/login']);

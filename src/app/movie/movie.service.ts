@@ -92,7 +92,9 @@ export class MovieService {
 
   getWatchListIndex(index: number): number {
     for(let i in this.watchListMovies) {
-      if(this.watchListMovies[i].name === this.movies[index].name){
+      const wListMovie = this.watchListMovies[i];
+      const movie = this.movies[index];
+      if(wListMovie.name === movie.name && wListMovie.caption === movie.caption){
         return +i;
       }
     }
@@ -115,6 +117,15 @@ export class MovieService {
       genres.push(genre.name);
     }
     return genres.join(", ");
+  }
+
+  getMovieIndex(movieName: string, caption: string): number {
+    for(let i in this.movies) {
+      const movie = this.movies[i];
+      if(movie.name === movieName && movie.caption === caption){
+        return +i;
+      }
+    }
   }
 
 }

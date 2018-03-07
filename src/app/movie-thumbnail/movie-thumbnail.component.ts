@@ -2,6 +2,7 @@ import { Component, Input, OnInit} from '@angular/core';
 import { Movie } from '../movie/movie.model';
 import { MovieService } from '../movie/movie.service';
 import { AuthService } from '../auth/auth.service';
+import { DataService } from '../shared/data.service';
 
 @Component({
   selector: 'app-movie-thumbnail',
@@ -14,7 +15,9 @@ export class MovieThumbnailComponent implements OnInit {
   @Input() pageName: string;
   watchListIndex: number;
 
-  constructor(private movieService: MovieService, private authService: AuthService) { }
+  constructor(private movieService: MovieService,
+              private authService: AuthService,
+              private dataService: DataService) { }
 
   ngOnInit() {
     this.watchListIndex = this.movieService.getWatchListIndex(this.movieIndex);
@@ -37,16 +40,7 @@ export class MovieThumbnailComponent implements OnInit {
       this.movieService.watchListChanged.next(this.movieService.getWatchList());
     }
     this.movieService.moviesChanged.next(this.movieService.getMovies());
-  }
-
-  getMovieIndex(index: number): number {
-    const movieName = this.movie.name;
-    const movies = this.movieService.getMovies();
-    for(let i in movies) {
-      if(movies[i].name === movieName) {
-        return +i;
-      }
-    }
+    this.dataService.saveMovies();
   }
 
   getMovieGenresString() {

@@ -28,7 +28,7 @@
       ></i>
       <a class="fa fa-pencil float-right text-info"
          style="cursor: pointer; text-decoration: none;"
-         routerLink="/movies/{{ (watchListIndex !== -1) ? getMovieIndex(movieIndex) : movieIndex }}/edit"
+         routerLink="/movies/{{ movieIndex }}/edit"
       ></a>
     </div>
     <div class="card-footer" *ngSwitchCase="'watchList'">

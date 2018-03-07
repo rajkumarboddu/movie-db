@@ -4,5 +4,10 @@
   </div>
 </div>
 <div class="card-deck">
-  <app-movie-thumbnail *ngFor="let movie of movies | filterMovieByGenre:genreName; let i = index" [movie]="movie" [movieIndex]="i" [pageName]="'genre'"></app-movie-thumbnail>
+  <app-movie-thumbnail
+    *ngFor="let movie of movies | filterMovieByGenre:genreName"
+    [movie]="movie"
+    [movieIndex]="movieService.getMovieIndex(movie.name, movie.caption)"
+    [pageName]="'genre'"
+  ></app-movie-thumbnail>
 </div>

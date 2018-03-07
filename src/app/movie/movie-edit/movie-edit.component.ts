@@ -7,6 +7,7 @@ import { Movie } from '../movie.model';
 import { FormArray, FormControl, FormGroup, Validators} from '@angular/forms';
 import { Rating } from '../rating/rating.model';
 import { Location } from '@angular/common';
+import { DataService } from '../../shared/data.service';
 
 @Component({
   selector: 'app-movie-edit',
@@ -25,7 +26,8 @@ export class MovieEditComponent implements OnInit {
               private movieService: MovieService,
               private router: Router,
               private route: ActivatedRoute,
-              private location: Location) { }
+              private location: Location,
+              private dataService: DataService) { }
 
   ngOnInit() {
     this.genres = this.genreService.getGenres();
@@ -125,7 +127,7 @@ export class MovieEditComponent implements OnInit {
       this.movieForm.reset();
     }
     this.formSubmitSuccess = true;
-
+    this.dataService.saveMovies();
   }
 
   onCancel(){
