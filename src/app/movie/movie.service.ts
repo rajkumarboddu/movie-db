@@ -8,7 +8,7 @@ export class MovieService {
   public moviesChanged = new Subject();
 
   private movies: Movie[] = [
-    new Movie(
+    /*new Movie(
       'Avengers',
       'Infinity War',
       'https://vignette.wikia.nocookie.net/marvelcinematicuniverse/images/0/03/Avengers_Infinity_War_Poster_2.jpg/revision/latest?cb=20180211004609',
@@ -51,7 +51,7 @@ export class MovieService {
       ],
       new Rating(4),
       'Jake, a paraplegic marine, replaces his brother on the Na\'vi inhabited Pandora for a corporate mission. He is accepted by the natives as one of their own but he must decide where his loyalties lie.'
-    ),
+    ),*/
   ];
 
   private watchListMovies: Movie[] = [];

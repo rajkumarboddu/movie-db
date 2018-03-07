@@ -25,7 +25,13 @@ export class MovieDetailComponent implements OnInit {
         this.id = +params['id'];
         this.movie = this.movieService.getMovie(this.id);
       }
-    )
+    );
+    this.movieService.moviesChanged
+      .subscribe(
+        () => {
+          this.movie = this.movieService.getMovie(this.id);
+        }
+      )
   }
 
   onDelete() {

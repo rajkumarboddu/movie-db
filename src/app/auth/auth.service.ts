@@ -25,7 +25,7 @@ export class AuthService {
       );
   }
 
-  signinUser(form: NgForm): void {
+  signinUser(form: NgForm, returnUrl: string): void {
     firebase.auth().signInWithEmailAndPassword(form.value.email, form.value.password)
       .then(
         (response) => {
@@ -34,7 +34,7 @@ export class AuthService {
             .then(
               (token: string) => {
                 this.token = token;
-                this.signInStatus.next({status: true});
+                this.signInStatus.next({status: true, returnUrl: returnUrl});
               }
             )
         }
@@ -43,7 +43,7 @@ export class AuthService {
         error => {
           console.log(error);
           if(error.code === "auth/wrong-password") {
-            this.signInStatus.next({status: false, msg: 'Invalid Email/Password'});
+            this.signInStatus.next({status: false, returnUrl: returnUrl});
           }
           form.reset();
         }

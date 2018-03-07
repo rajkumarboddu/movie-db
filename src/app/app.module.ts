@@ -23,6 +23,8 @@ import { SignupComponent } from './auth/signup/signup.component';
 import { LoginComponent } from './auth/login/login.component';
 import { AuthService } from './auth/auth.service';
 import { AuthGuardService } from './auth/auth-guard.service';
+import { PublicGuardService } from './auth/public-guard.service';
+import { LoaderComponent } from './loader/loader.component';
 
 
 @NgModule({
@@ -39,7 +41,8 @@ import { AuthGuardService } from './auth/auth-guard.service';
     MovieDetailComponent,
     FilterMovieByGenrePipe,
     SignupComponent,
-    LoginComponent
+    LoginComponent,
+    LoaderComponent
   ],
   imports: [
     BrowserModule,
@@ -48,7 +51,7 @@ import { AuthGuardService } from './auth/auth-guard.service';
     ReactiveFormsModule,
     HttpModule
   ],
-  providers: [MovieService, GenreService, DataService, AuthService, AuthGuardService],
+  providers: [MovieService, GenreService, DataService, AuthService, AuthGuardService, PublicGuardService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

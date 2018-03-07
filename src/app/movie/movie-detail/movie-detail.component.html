@@ -1,4 +1,4 @@
-<div class="row py-5">
+<div class="row py-5" *ngIf="movie !== undefined; else loader">
   <div class="col-4">
     <img
       [src]="movie.poster"
@@ -36,3 +36,6 @@
     </div>
   </div>
 </div>
+<ng-template #loader>
+  <app-loader></app-loader>
+</ng-template>

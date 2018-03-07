@@ -4,7 +4,9 @@
     <a routerLink="/movies/create" class="btn btn-success" *ngIf="authService.isAuthenticated()">New Movie</a>
   </div>
 </div>
-<div class="card-deck">
+<div class="card-deck" *ngIf="movies.length > 0; else loader">
   <app-movie-thumbnail *ngFor="let movie of movies; let i = index" [movie]="movie" [movieIndex]="i" [pageName]="'home'"></app-movie-thumbnail>
 </div>
-
+<ng-template #loader>
+  <app-loader></app-loader>
+</ng-template>
