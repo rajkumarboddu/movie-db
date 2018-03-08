@@ -1,5 +1,5 @@
-import { Rating } from './rating/rating.model';
-import {Genre} from './genre/genre.model';
+import { Rating } from '../shared/rating/rating.model';
+import {Genre} from '../genre/genre.model';
 
 export class Movie {
   constructor(

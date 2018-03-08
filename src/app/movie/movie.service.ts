@@ -1,6 +1,6 @@
 import { Movie } from './movie.model';
-import { Rating } from './rating/rating.model';
-import { Genre } from './genre/genre.model';
+import { Rating } from '../shared/rating/rating.model';
+import { Genre } from '../genre/genre.model';
 import { Subject } from 'rxjs/Subject';
 
 export class MovieService {

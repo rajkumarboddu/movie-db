@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { GenreService } from '../genre/genre.service';
-import { Genre } from '../genre/genre.model';
+import { GenreService } from '../../genre/genre.service';
+import { Genre } from '../../genre/genre.model';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { MovieService } from '../movie.service';
 import { Movie } from '../movie.model';
 import { FormArray, FormControl, FormGroup, Validators} from '@angular/forms';
-import { Rating } from '../rating/rating.model';
+import { Rating } from '../../shared/rating/rating.model';
 import { Location } from '@angular/common';
 import { DataService } from '../../shared/data.service';
 

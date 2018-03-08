@@ -1,8 +1,8 @@
 import { Component, Input, OnInit} from '@angular/core';
-import { Movie } from '../movie/movie.model';
-import { MovieService } from '../movie/movie.service';
-import { AuthService } from '../auth/auth.service';
-import { DataService } from '../shared/data.service';
+import { Movie } from '../../movie/movie.model';
+import { MovieService } from '../../movie/movie.service';
+import { AuthService } from '../../auth/auth.service';
+import { DataService } from '../data.service';
 
 @Component({
   selector: 'app-movie-thumbnail',

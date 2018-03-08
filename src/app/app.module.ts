@@ -1,55 +1,46 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { HttpModule } from '@angular/http';
 
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
-import { MovieComponent } from './movie/movie.component';
-import { RatingComponent } from './movie/rating/rating.component';
 import { WatchListComponent } from './watch-list/watch-list.component';
-import { GenreComponent } from './movie/genre/genre.component';
 import { MovieService } from './movie/movie.service';
-import { MovieThumbnailComponent } from './movie-thumbnail/movie-thumbnail.component';
 import { AppRoutingModule } from './app-routing.module';
 import { HomeComponent } from './home/home.component';
-import { MovieEditComponent } from './movie/movie-edit/movie-edit.component';
-import { GenreService } from './movie/genre/genre.service';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MovieDetailComponent } from './movie/movie-detail/movie-detail.component';
-import { FilterMovieByGenrePipe } from './movie/filter-movie-by-genre.pipe';
+import { GenreService } from './genre/genre.service';
 import { DataService } from './shared/data.service';
-import { HttpModule } from '@angular/http';
 import { SignupComponent } from './auth/signup/signup.component';
 import { LoginComponent } from './auth/login/login.component';
 import { AuthService } from './auth/auth.service';
 import { AuthGuardService } from './auth/auth-guard.service';
 import { PublicGuardService } from './auth/public-guard.service';
-import { LoaderComponent } from './loader/loader.component';
+import { MoviesModule } from './movie/movies.module';
+import { GenreComponent } from './genre/genre.component';
+import { FilterMovieByGenrePipe } from './genre/filter-movie-by-genre.pipe';
+import { SharedModule } from './shared/shared.module';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
-    MovieComponent,
-    RatingComponent,
-    WatchListComponent,
     GenreComponent,
-    MovieThumbnailComponent,
+    WatchListComponent,
     HomeComponent,
-    MovieEditComponent,
-    MovieDetailComponent,
-    FilterMovieByGenrePipe,
     SignupComponent,
     LoginComponent,
-    LoaderComponent
+    FilterMovieByGenrePipe
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
     FormsModule,
-    ReactiveFormsModule,
-    HttpModule
+    HttpModule,
+    SharedModule,
+    MoviesModule,
+    AppRoutingModule
   ],
   providers: [MovieService, GenreService, DataService, AuthService, AuthGuardService, PublicGuardService],
   bootstrap: [AppComponent]
