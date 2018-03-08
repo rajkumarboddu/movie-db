@@ -15,6 +15,9 @@ const authRoutes: Routes = [
   ],
   exports: [
     RouterModule
+  ],
+  providers:[
+    PublicGuardService
   ]
 })
 export class AuthRoutingModule {}

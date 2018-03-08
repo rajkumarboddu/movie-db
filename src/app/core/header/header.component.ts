@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { GenreService } from '../genre/genre.service';
-import { Genre } from '../genre/genre.model';
-import { DataService } from '../shared/data.service';
+import { GenreService } from '../../genre/genre.service';
+import { Genre } from '../../genre/genre.model';
+import { DataService } from '../../shared/data.service';
 import { Response } from '@angular/http';
-import { AuthService } from '../auth/auth.service';
+import { AuthService } from '../../auth/auth.service';
 import { Router } from '@angular/router';
 
 @Component({

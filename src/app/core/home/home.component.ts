@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Movie } from '../movie/movie.model';
-import { MovieService } from '../movie/movie.service';
+import { Movie } from '../../movie/movie.model';
+import { MovieService } from '../../movie/movie.service';
 import { Subscription } from 'rxjs/Subscription';
-import { AuthService } from '../auth/auth.service';
+import { AuthService } from '../../auth/auth.service';
 
 @Component({
   selector: 'app-home',

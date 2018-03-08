@@ -7,17 +7,20 @@ import { AuthGuardService } from '../auth/auth-guard.service';
 import { MovieEditComponent } from './movie-edit/movie-edit.component';
 
 const moviesRoutes: Routes = [
-  { path: 'movies', component: MovieComponent, children:[
+  { path: '', component: MovieComponent, children:[
       { path: 'create', component: MovieEditComponent, canActivate: [AuthGuardService] },
       { path: ':id', component: MovieDetailComponent },
       { path: ':id/edit', component: MovieEditComponent, canActivate: [AuthGuardService] }
-    ]}
+  ]}
 ];
 
 @NgModule({
   imports: [
     RouterModule.forChild(moviesRoutes)
   ],
-  exports: [ RouterModule ]
+  exports: [ RouterModule ],
+  providers: [
+    AuthGuardService
+  ]
 })
 export class MoviesRoutingModule {}

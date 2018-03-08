@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import * as firebase from 'firebase';
+
 import { DataService } from './shared/data.service';
 import { MovieService } from './movie/movie.service';
-import * as firebase from 'firebase';
 import {Movie} from './movie/movie.model';
 
 @Component({
