@@ -1,10 +1,15 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import {Observable} from 'rxjs/Observable';
+import * as firebase from "firebase";
+
 import { GenreService } from '../../genre/genre.service';
 import { Genre } from '../../genre/genre.model';
 import { DataService } from '../../shared/data.service';
-import { Response } from '@angular/http';
-import { AuthService } from '../../auth/auth.service';
-import { Router } from '@angular/router';
+import * as fromApp from '../../store/app.reducers';
+import * as fromAuth from '../../auth/store/auth.reducers';
+import * as fromAuthActions from '../../auth/store/auth.actions';
 
 @Component({
   selector: 'app-header',
@@ -13,18 +18,21 @@ import { Router } from '@angular/router';
 })
 export class HeaderComponent implements OnInit {
   genres: Genre[];
+  authState: Observable<fromAuth.State>;
 
   constructor(private genreService: GenreService,
               private dataService: DataService,
-              private authService: AuthService,
-              private router: Router) { }
+              private router: Router,
+              private store: Store<fromApp.AppState>) { }
 
   ngOnInit() {
     this.genres = this.genreService.getGenres();
+    this.authState = this.store.select('auth');
   }
 
   onLogout() {
-    this.authService.logout();
+    firebase.auth().signOut();
+    this.store.dispatch(new fromAuthActions.Logout());
     this.router.navigate(['/login']);
   }
 

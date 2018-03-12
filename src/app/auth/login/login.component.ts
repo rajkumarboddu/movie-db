@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { AuthService } from '../auth.service';
 import {ActivatedRoute, Params, Router} from '@angular/router';
+import {Store} from '@ngrx/store';
+
+import {AppState} from '../../store/app.reducers';
+import {AuthEffects} from '../store/auth.effects';
+import * as fromAuthActions from '../store/auth.actions';
 
 @Component({
   selector: 'app-login',
@@ -12,12 +16,13 @@ export class LoginComponent implements OnInit {
   invalidPassword: boolean;
   returnUrl: string;
 
-  constructor(private authService: AuthService,
+  constructor(private authEffects: AuthEffects,
               private router: Router,
-              private route: ActivatedRoute) { }
+              private route: ActivatedRoute,
+              private store: Store<AppState>) { }
 
   ngOnInit() {
-    this.authService.signInStatus
+    this.authEffects.signInStatus
       .subscribe(
         (status: {status: boolean, returnUrl?: string}) => {
           if(status.status) {
@@ -36,7 +41,8 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit(form: NgForm) {
-    this.authService.signinUser(form, this.returnUrl);
+    const returnUrl = this.returnUrl;
+    this.store.dispatch(new fromAuthActions.TrySignin({form, returnUrl}));
   }
 
 }

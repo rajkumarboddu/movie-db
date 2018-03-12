@@ -9,7 +9,7 @@
     </h5>
     <app-rating [rating]="movie.rating.rating"></app-rating>
   </div>
-  <ng-template [ngIf]="authService.isAuthenticated()">
+  <ng-template [ngIf]="(authState | async).authenticated">
     <div class="card-footer" *ngSwitchCase="'home'">
       <i class="fa fa-eye float-right"
          style="cursor: pointer;"

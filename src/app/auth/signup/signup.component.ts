@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { AuthService } from '../auth.service';
+import { Store } from '@ngrx/store';
+
+import { AuthEffects } from '../store/auth.effects';
+import * as fromAuthActions from '../store/auth.actions';
+import * as fromApp from '../../store/app.reducers';
 
 @Component({
   selector: 'app-signup',
@@ -11,10 +15,11 @@ export class SignupComponent implements OnInit {
   signUpSuccess: boolean = false;
   signUpError: boolean = false;
 
-  constructor(private authService: AuthService) { }
+  constructor(private authEffect: AuthEffects,
+              private store: Store<fromApp.AppState>) { }
 
   ngOnInit() {
-    this.authService.signupStatus.subscribe(
+    this.authEffect.signupStatus.subscribe(
       (result: boolean) => {
         this.signUpSuccess = result;
         this.signUpError = !result;
@@ -23,7 +28,12 @@ export class SignupComponent implements OnInit {
   }
 
   onSubmit(form: NgForm): void {
-    this.authService.signupUser(form.value.email, form.value.password);
+    this.store.dispatch(
+      new fromAuthActions.TrySignup({
+        email: form.value.email,
+        password: form.value.password
+      })
+    );
     form.reset();
   }
 
