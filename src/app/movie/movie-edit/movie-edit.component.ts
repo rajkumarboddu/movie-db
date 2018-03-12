@@ -1,13 +1,16 @@
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
+import { Location } from '@angular/common';
+import { FormArray, FormControl, FormGroup, Validators} from '@angular/forms';
+import { Store } from '@ngrx/store';
+
 import { GenreService } from '../../genre/genre.service';
 import { Genre } from '../../genre/genre.model';
-import { ActivatedRoute, Params, Router } from '@angular/router';
-import { MovieService } from '../movie.service';
 import { Movie } from '../movie.model';
-import { FormArray, FormControl, FormGroup, Validators} from '@angular/forms';
 import { Rating } from '../../shared/rating/rating.model';
-import { Location } from '@angular/common';
-import { DataService } from '../../shared/data.service';
+import * as fromApp from '../../store/app.reducers';
+import * as fromMovie from '../store/movie.reducers';
+import * as fromMovieActions from '../store/movie.actions';
 
 @Component({
   selector: 'app-movie-edit',
@@ -23,11 +26,10 @@ export class MovieEditComponent implements OnInit {
   editMode: boolean = false;
 
   constructor(private genreService: GenreService,
-              private movieService: MovieService,
               private router: Router,
               private route: ActivatedRoute,
               private location: Location,
-              private dataService: DataService) { }
+              private store: Store<fromApp.AppState>) { }
 
   ngOnInit() {
     this.genres = this.genreService.getGenres();
@@ -35,7 +37,11 @@ export class MovieEditComponent implements OnInit {
       (params: Params) => {
         this.id = params['id'] ? +params['id'] : null;
         if(this.id !== null){
-          this.movie = this.movieService.getMovie(this.id);
+          this.store.select('movies').subscribe(
+            (moviesState: fromMovie.State) => {
+              this.movie = moviesState.movies[this.id];
+            }
+          );
           this.editMode = true;
         }
       }
@@ -120,14 +126,14 @@ export class MovieEditComponent implements OnInit {
       this.movieForm.get('synopsis').value
     );
     if(this.editMode){
-      this.movieService.updateMovie(this.id, newMovie);
-      this.router.navigate(['../'], {relativeTo: this.route});
+      this.store.dispatch(new fromMovieActions.UpdateMovie({index: this.id, movie: newMovie}));
+      this.location.back();
     } else{
-      this.movieService.addMovie(newMovie);
+      this.store.dispatch(new fromMovieActions.AddMovie(newMovie));
       this.movieForm.reset();
     }
     this.formSubmitSuccess = true;
-    this.dataService.saveMovies();
+    this.store.dispatch(new fromMovieActions.SaveMovies());
   }
 
   onCancel(){

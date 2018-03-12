@@ -1,11 +1,17 @@
+import { Subject } from 'rxjs/Subject';
+import {Store} from '@ngrx/store';
+import {Injectable} from '@angular/core';
+
 import { Movie } from './movie.model';
 import { Rating } from '../shared/rating/rating.model';
 import { Genre } from '../genre/genre.model';
-import { Subject } from 'rxjs/Subject';
+import * as fromApp from '../store/app.reducers';
+import * as fromMovie from '../movie/store/movie.reducers';
+import * as fromMovieActions from '../movie/store/movie.actions';
 
+@Injectable()
 export class MovieService {
   public watchListChanged = new Subject();
-  public moviesChanged = new Subject();
 
   private movies: Movie[] = [
     /*new Movie(
@@ -56,8 +62,12 @@ export class MovieService {
 
   private watchListMovies: Movie[] = [];
 
-  getMovies(): Movie[] {
-    return this.movies.slice();
+  constructor(private store: Store<fromApp.AppState>) {
+    this.store.select('movies').subscribe(
+      (moviesState: fromMovie.State) => {
+        this.movies = moviesState.movies;
+      }
+    )
   }
 
   getWatchList(): Movie[] {
@@ -78,16 +88,8 @@ export class MovieService {
       this.removeFromWatchList(movieIndex);
       return true;
     }
-    this.movies.splice(movieIndex,1);
+    this.store.dispatch(new fromMovieActions.DeleteMovie(movieIndex));
     return false;
-  }
-
-  getMovie(movieIndex: number): Movie {
-    return this.movies.slice()[movieIndex];
-  }
-
-  addMovie(newMovie: Movie) {
-    this.movies.push(newMovie);
   }
 
   getWatchListIndex(index: number): number {
@@ -99,24 +101,6 @@ export class MovieService {
       }
     }
     return -1;
-  }
-
-  updateMovie(index: number, updatedMovie: Movie) {
-    this.movies[index] = updatedMovie;
-  }
-
-  setMovies(movies: Movie[]) {
-    this.movies = movies;
-    this.moviesChanged.next(this.movies.slice());
-  }
-
-  getMovieGenresString(index: number) {
-    let genres = [];
-    const movie = this.movies[index];
-    for(let genre of movie.genre) {
-      genres.push(genre.name);
-    }
-    return genres.join(", ");
   }
 
   getMovieIndex(movieName: string, caption: string): number {

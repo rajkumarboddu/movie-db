@@ -6,7 +6,6 @@ import * as firebase from "firebase";
 
 import { GenreService } from '../../genre/genre.service';
 import { Genre } from '../../genre/genre.model';
-import { DataService } from '../../shared/data.service';
 import * as fromApp from '../../store/app.reducers';
 import * as fromAuth from '../../auth/store/auth.reducers';
 import * as fromAuthActions from '../../auth/store/auth.actions';
@@ -21,7 +20,6 @@ export class HeaderComponent implements OnInit {
   authState: Observable<fromAuth.State>;
 
   constructor(private genreService: GenreService,
-              private dataService: DataService,
               private router: Router,
               private store: Store<fromApp.AppState>) { }
 

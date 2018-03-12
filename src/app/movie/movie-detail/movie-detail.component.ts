@@ -8,6 +8,8 @@ import { MovieService } from '../movie.service';
 import { Movie } from '../movie.model';
 import * as fromAuth from '../../auth/store/auth.reducers';
 import * as fromApp from '../../store/app.reducers';
+import * as fromMovie from '../store/movie.reducers';
+import * as fromMovieActions from '../store/movie.actions';
 
 @Component({
   selector: 'app-movie-detail',
@@ -28,21 +30,19 @@ export class MovieDetailComponent implements OnInit {
     this.route.params.subscribe(
       (params: Params) => {
         this.id = +params['id'];
-        this.movie = this.movieService.getMovie(this.id);
+        this.store.select('movies')
+          .subscribe(
+            (moviesState: fromMovie.State) => {
+              this.movie = moviesState.movies[this.id];
+            }
+          );
       }
     );
-    this.movieService.moviesChanged
-      .subscribe(
-        () => {
-          this.movie = this.movieService.getMovie(this.id);
-        }
-      );
     this.authState = this.store.select('auth');
   }
 
   onDelete() {
-    this.movieService.deleteMovie(this.id);
-    this.movieService.moviesChanged.next(this.movieService.getMovies());
+    this.store.dispatch(new fromMovieActions.DeleteMovie(this.id));
     this.location.back();
   }
 
@@ -51,7 +51,11 @@ export class MovieDetailComponent implements OnInit {
   }
 
   getMovieGenresString() {
-    return this.movieService.getMovieGenresString(this.id);
+    let genres = [];
+    for(let genre of this.movie.genre) {
+      genres.push(genre.name);
+    }
+    return genres.join(", ");
   }
 
 }

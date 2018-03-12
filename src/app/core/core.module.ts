@@ -3,7 +3,6 @@ import {HeaderComponent} from './header/header.component';
 import {HomeComponent} from './home/home.component';
 import {CommonModule} from '@angular/common';
 import {AppRoutingModule} from '../app-routing.module';
-import {DataService} from '../shared/data.service';
 import {GenreService} from '../genre/genre.service';
 import {MovieService} from '../movie/movie.service';
 import {SharedModule} from '../shared/shared.module';
@@ -25,8 +24,7 @@ import {SharedModule} from '../shared/shared.module';
   ],
   providers: [
     MovieService,
-    GenreService,
-    DataService
+    GenreService
   ]
 })
 export class CoreModule {}

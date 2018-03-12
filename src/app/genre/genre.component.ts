@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
+import { Store } from '@ngrx/store';
+
 import { Movie } from '../movie/movie.model';
-import { MovieService } from '../movie/movie.service';
+import * as fromApp from '../store/app.reducers';
+import * as fromMovie from '../movie/store/movie.reducers';
 
 @Component({
   selector: 'app-genre',
@@ -13,13 +16,17 @@ export class GenreComponent implements OnInit {
   movies: Movie[];
 
 
-  constructor(private movieService: MovieService, private route: ActivatedRoute) { }
+  constructor(private store: Store<fromApp.AppState>, private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.route.params.subscribe(
       (params: Params) => {
         this.genreName = params['genreName'];
-        this.movies = this.movieService.getMovies();
+        this.store.select('movies').subscribe(
+          (moviesState: fromMovie.State) => {
+            this.movies = moviesState.movies;
+          }
+        )
       }
     )
   }

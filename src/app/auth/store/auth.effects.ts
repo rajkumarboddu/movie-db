@@ -6,9 +6,9 @@ import {fromPromise} from 'rxjs/observable/fromPromise';
 import * as firebase from 'firebase';
 import {Injectable} from '@angular/core';
 import {Subject} from 'rxjs/Subject';
+import {NgForm} from '@angular/forms';
 
 import * as fromAuthActions from './auth.actions';
-import {NgForm} from '@angular/forms';
 
 @Injectable()
 export class AuthEffects {

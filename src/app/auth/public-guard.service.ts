@@ -1,6 +1,7 @@
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
 import {Injectable, OnInit} from '@angular/core';
 import { Store } from '@ngrx/store';
+import 'rxjs/add/operator/take';
 
 import * as fromAuth from './store/auth.reducers';
 import * as fromApp from '../store/app.reducers';
@@ -12,7 +13,7 @@ export class PublicGuardService implements CanActivate, OnInit {
   constructor(private store: Store<fromApp.AppState>, private router: Router){}
 
   ngOnInit() {
-    this.store.select('auth').subscribe(
+    this.store.select('auth').take(1).subscribe(
       (state: fromAuth.State) => {
         this.authenticated = state.authenticated;
       }

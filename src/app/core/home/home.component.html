@@ -4,8 +4,8 @@
     <a routerLink="/movies/create" class="btn btn-success" *ngIf="(authState | async).authenticated">New Movie</a>
   </div>
 </div>
-<div class="card-deck" *ngIf="movies.length > 0; else loader">
-  <app-movie-thumbnail *ngFor="let movie of movies; let i = index" [movie]="movie" [movieIndex]="i" [pageName]="'home'"></app-movie-thumbnail>
+<div class="card-deck" *ngIf="(moviesState | async).movies.length > 0; else loader">
+  <app-movie-thumbnail *ngFor="let movie of (moviesState | async).movies; let i = index" [movie]="movie" [movieIndex]="i" [pageName]="'home'"></app-movie-thumbnail>
 </div>
 <ng-template #loader>
   <app-loader></app-loader>

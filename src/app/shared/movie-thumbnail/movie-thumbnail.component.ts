@@ -4,9 +4,9 @@ import { Observable } from 'rxjs/Observable';
 
 import { Movie } from '../../movie/movie.model';
 import { MovieService } from '../../movie/movie.service';
-import { DataService } from '../data.service';
 import * as fromAuth from '../../auth/store/auth.reducers';
 import * as fromApp from '../../store/app.reducers';
+import * as fromMovieActions from '../../movie/store/movie.actions';
 
 @Component({
   selector: 'app-movie-thumbnail',
@@ -21,7 +21,6 @@ export class MovieThumbnailComponent implements OnInit {
   authState: Observable<fromAuth.State>;
 
   constructor(private movieService: MovieService,
-              private dataService: DataService,
               private store: Store<fromApp.AppState>) { }
 
   ngOnInit() {
@@ -45,12 +44,15 @@ export class MovieThumbnailComponent implements OnInit {
     if(watchListChanged) {
       this.movieService.watchListChanged.next(this.movieService.getWatchList());
     }
-    this.movieService.moviesChanged.next(this.movieService.getMovies());
-    this.dataService.saveMovies();
+    this.store.dispatch(new fromMovieActions.SaveMovies());
   }
 
   getMovieGenresString() {
-    return this.movieService.getMovieGenresString(this.movieIndex);
+    let genres = [];
+    for(let genre of this.movie.genre) {
+      genres.push(genre.name);
+    }
+    return genres.join(", ");
   }
 
 }
