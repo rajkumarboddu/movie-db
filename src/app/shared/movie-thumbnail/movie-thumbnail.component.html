@@ -4,7 +4,7 @@
     <h5 class="card-title" style="font-size: 1rem;">
       {{ movie.name }}
       <p>
-        <small class="text-muted">{{ movie.caption || getMovieGenresString() }}</small>
+        <small class="text-muted">{{ movie.caption || genreString }}</small>
       </p>
     </h5>
     <app-rating [rating]="movie.rating.rating"></app-rating>

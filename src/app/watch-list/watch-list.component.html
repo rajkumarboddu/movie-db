@@ -3,7 +3,7 @@
     <h3 class="py-5">Watch List</h3>
   </div>
 </div>
-<p *ngIf="movies.length===0" class="text-muted">No movies added to your Wish List</p>
+<p *ngIf="(watchListState | async).wMovies.length===0" class="text-muted">No movies added to your Wish List</p>
 <div class="card-deck">
-  <app-movie-thumbnail *ngFor="let movie of movies; let i = index" [movie]="movie" [movieIndex]="i" [pageName]="'watchList'"></app-movie-thumbnail>
+  <app-movie-thumbnail *ngFor="let movie of (watchListState | async).wMovies; let i = index" [movie]="movie" [movieIndex]="i" [pageName]="'watchList'"></app-movie-thumbnail>
 </div>

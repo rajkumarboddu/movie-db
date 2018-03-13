@@ -37,7 +37,8 @@ export class MovieEditComponent implements OnInit {
       (params: Params) => {
         this.id = params['id'] ? +params['id'] : null;
         if(this.id !== null){
-          this.store.select('movies').subscribe(
+          this.store.select('movies')
+            .subscribe(
             (moviesState: fromMovie.State) => {
               this.movie = moviesState.movies[this.id];
             }

@@ -7,6 +7,8 @@ import { MovieService } from '../../movie/movie.service';
 import * as fromAuth from '../../auth/store/auth.reducers';
 import * as fromApp from '../../store/app.reducers';
 import * as fromMovieActions from '../../movie/store/movie.actions';
+import * as fromMovie from '../../movie/store/movie.reducers';
+import * as fromWatchListActions from '../../watch-list/store/watch-list.actions';
 
 @Component({
   selector: 'app-movie-thumbnail',
@@ -18,6 +20,7 @@ export class MovieThumbnailComponent implements OnInit {
   @Input() movieIndex: number;
   @Input() pageName: string;
   watchListIndex: number;
+  genreString: string;
   authState: Observable<fromAuth.State>;
 
   constructor(private movieService: MovieService,
@@ -26,33 +29,32 @@ export class MovieThumbnailComponent implements OnInit {
   ngOnInit() {
     this.watchListIndex = this.movieService.getWatchListIndex(this.movieIndex);
     this.authState = this.store.select('auth');
+    this.genreString = this.movieService.getMovieGenresString(this.movie);
   }
 
   onAddToWatchList(index: number){
-    this.watchListIndex = this.movieService.addToWatchList(index);
-    this.movieService.watchListChanged.next(this.movieService.getWatchList());
+    this.store.select('movies').take(1)
+      .subscribe(
+        (moviesState: fromMovie.State) => {
+          const movie = moviesState.movies[index];
+          this.store.dispatch(new fromWatchListActions.AddToWatchlist(movie));
+          this.watchListIndex = this.movieService.getWatchListIndex(index);
+          console.log(this.watchListIndex);
+        }
+      );
   }
 
   onRemoveFromWatchList(){
-    this.movieService.removeFromWatchList(this.watchListIndex);
+    this.store.dispatch(new fromWatchListActions.RemoveFromWatchlist(this.movieIndex));
     this.watchListIndex = -1;
-    this.movieService.watchListChanged.next(this.movieService.getWatchList());
   }
 
   onDeleteMovie(index: number) {
-    let watchListChanged: boolean = this.movieService.deleteMovie(index);
-    if(watchListChanged) {
-      this.movieService.watchListChanged.next(this.movieService.getWatchList());
+    const watchListIndex = this.movieService.getWatchListIndex(index);
+    if(watchListIndex !== -1){
+      this.store.dispatch(new fromWatchListActions.RemoveFromWatchlist(watchListIndex));
     }
-    this.store.dispatch(new fromMovieActions.SaveMovies());
-  }
-
-  getMovieGenresString() {
-    let genres = [];
-    for(let genre of this.movie.genre) {
-      genres.push(genre.name);
-    }
-    return genres.join(", ");
+    this.store.dispatch(new fromMovieActions.DeleteMovie(index));
   }
 
 }

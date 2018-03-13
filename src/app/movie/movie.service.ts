@@ -1,4 +1,3 @@
-import { Subject } from 'rxjs/Subject';
 import {Store} from '@ngrx/store';
 import {Injectable} from '@angular/core';
 
@@ -7,11 +6,10 @@ import { Rating } from '../shared/rating/rating.model';
 import { Genre } from '../genre/genre.model';
 import * as fromApp from '../store/app.reducers';
 import * as fromMovie from '../movie/store/movie.reducers';
-import * as fromMovieActions from '../movie/store/movie.actions';
+import * as fromWatchList from '../watch-list/store/watch-list.reducers';
 
 @Injectable()
 export class MovieService {
-  public watchListChanged = new Subject();
 
   private movies: Movie[] = [
     /*new Movie(
@@ -67,29 +65,12 @@ export class MovieService {
       (moviesState: fromMovie.State) => {
         this.movies = moviesState.movies;
       }
-    )
-  }
-
-  getWatchList(): Movie[] {
-    return this.watchListMovies.slice();
-  }
-
-  removeFromWatchList(index: number) {
-    this.watchListMovies.splice(index, 1);
-  }
-
-  addToWatchList(index: number): number {
-    this.watchListMovies.push(this.movies.slice()[index]);
-    return this.watchListMovies.length-1;
-  }
-
-  deleteMovie(movieIndex: number): boolean {
-    if(this.getWatchListIndex(movieIndex) !== -1){
-      this.removeFromWatchList(movieIndex);
-      return true;
-    }
-    this.store.dispatch(new fromMovieActions.DeleteMovie(movieIndex));
-    return false;
+    );
+    this.store.select('watchList').subscribe(
+      (watchListState: fromWatchList.State) => {
+        this.watchListMovies = watchListState.wMovies;
+      }
+    );
   }
 
   getWatchListIndex(index: number): number {
@@ -110,6 +91,14 @@ export class MovieService {
         return +i;
       }
     }
+  }
+
+  getMovieGenresString(movie: Movie) {
+    let genres = [];
+    for(let genre of movie.genre) {
+      genres.push(genre.name);
+    }
+    return genres.join(", ");
   }
 
 }

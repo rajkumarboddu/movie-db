@@ -10,6 +10,7 @@ import * as fromAuth from '../../auth/store/auth.reducers';
 import * as fromApp from '../../store/app.reducers';
 import * as fromMovie from '../store/movie.reducers';
 import * as fromMovieActions from '../store/movie.actions';
+import * as fromWatchListActions from '../../watch-list/store/watch-list.actions';
 
 @Component({
   selector: 'app-movie-detail',
@@ -19,6 +20,7 @@ import * as fromMovieActions from '../store/movie.actions';
 export class MovieDetailComponent implements OnInit {
   id: number;
   movie: Movie;
+  genreString: string;
   authState: Observable<fromAuth.State>;
 
   constructor(private movieService: MovieService,
@@ -34,6 +36,9 @@ export class MovieDetailComponent implements OnInit {
           .subscribe(
             (moviesState: fromMovie.State) => {
               this.movie = moviesState.movies[this.id];
+              if(this.movie){
+                this.genreString = this.movieService.getMovieGenresString(this.movie);
+              }
             }
           );
       }
@@ -47,15 +52,12 @@ export class MovieDetailComponent implements OnInit {
   }
 
   onAddToWatchList() {
-    this.movieService.addToWatchList(this.id);
-  }
-
-  getMovieGenresString() {
-    let genres = [];
-    for(let genre of this.movie.genre) {
-      genres.push(genre.name);
-    }
-    return genres.join(", ");
+    this.store.select('movies').take(1)
+      .subscribe(
+        (moviesState: fromMovie.State) => {
+          this.store.dispatch(new fromWatchListActions.AddToWatchlist(moviesState.movies[this.id]));
+        }
+      );
   }
 
 }

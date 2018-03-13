@@ -12,6 +12,7 @@ const initialState: State = {
 export function  movieReducers(state = initialState, action: fromMovieActions.MovieActions) {
   switch (action.type) {
     case (fromMovieActions.ADD_MOVIE):
+      console.log("in movies action");
       return {
         ...state,
         movies: [...state.movies, action.payload]
@@ -26,9 +27,11 @@ export function  movieReducers(state = initialState, action: fromMovieActions.Mo
         movies: updatedMovies
       };
     case (fromMovieActions.DELETE_MOVIE):
+      const newMovies = [...state.movies];
+      newMovies.splice(action.payload, 1);
       return {
         ...state,
-        movies: [...state.movies].splice(action.payload, 1)
+        movies: newMovies
       };
     case (fromMovieActions.SET_MOVIES):
       return {
